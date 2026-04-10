@@ -1,8 +1,8 @@
-# Orbit — Full-Cycle AI Marketing Platform
+# Orbit: Full-Cycle AI Marketing Platform
 
 > Market intelligence. Brand strategy. Buyer personas. In three modules.
 
-**Orbit** is a full-stack AI marketing tool that takes a product from zero context to a complete brand strategy — competitive landscape mapped, positioning defined, and high-fidelity buyer personas generated — all in one sequential workflow powered by Claude AI.
+**Orbit** is a full-stack AI marketing tool that takes a product from zero context to a complete brand strategy: competitive landscape mapped, positioning defined, and high-fidelity buyer personas generated, all in one sequential workflow powered by Claude AI.
 
 Built with **Next.js 16**, **Clerk authentication**, **Supabase**, and **Claude Sonnet 4.6**.
 
@@ -12,12 +12,12 @@ Built with **Next.js 16**, **Clerk authentication**, **Supabase**, and **Claude 
 
 ## What it does
 
-1. Sign in with Google via **Clerk** — your projects are private to your account
-2. Create a **project** — name your product and Orbit sets up a workspace
-3. Run **Module 1: Market Intelligence** — enter your industry, product category, and up to 5 competitors. Orbit returns a competitive positioning quadrant, market gaps, whitespace opportunities, and a full competitor breakdown
-4. Run **Module 2: Brand Foundation** — fed directly from M1 data. Generate your positioning statement, value proposition, messaging pillars, brand voice descriptors, and 3 tagline options
-5. Run **Module 3: Audience Studio** — grounded in M1 + M2 context. Generate 3 high-fidelity buyer personas with psychographics, pain points, buying triggers, objections, preferred channels, and sample ad hooks
-6. Each module unlocks sequentially — the output of every phase becomes the input context for the next
+1. Sign in with Google via **Clerk**. Your projects are private to your account.
+2. Create a **project**: name your product and Orbit sets up a workspace.
+3. Run **Module 1: Market Intelligence**: enter your industry, product category, and up to 5 competitors. Orbit returns a competitive positioning quadrant, market gaps, whitespace opportunities, and a full competitor breakdown.
+4. Run **Module 2: Brand Foundation**: fed directly from M1 data. Generate your positioning statement, value proposition, messaging pillars, brand voice descriptors, and 3 tagline options.
+5. Run **Module 3: Audience Studio**: grounded in M1 + M2 context. Generate 3 high-fidelity buyer personas with psychographics, pain points, buying triggers, objections, preferred channels, and sample ad hooks.
+6. Each module unlocks sequentially. The output of every phase becomes the input context for the next.
 
 ---
 
@@ -29,10 +29,10 @@ Built with **Next.js 16**, **Clerk authentication**, **Supabase**, and **Claude 
 | **Competitive positioning quadrant** | SVG chart plotting your competitors by price and quality |
 | **Market gap detection** | Numbered grid of gaps + teal-highlighted whitespace opportunities |
 | **Brand strategy output** | Positioning statement, value prop, messaging pillars, brand voice, taglines |
-| **Buyer personas** | 3 detailed personas with ad hooks — generated from full brand context |
-| **Auth-gated projects** | Clerk auth with Google OAuth — each user's projects are private |
+| **Buyer personas** | 3 detailed personas with ad hooks, generated from full brand context |
+| **Auth-gated projects** | Clerk auth with Google OAuth. Each user's projects are private. |
 | **Rate limiting** | 30 AI calls/day per user (Upstash Redis sliding window) |
-| **Usage meter** | Live credit counter in the top bar — X / 30 daily credits |
+| **Usage meter** | Live credit counter in the top bar: X / 30 daily credits |
 | **Animated dark UI** | Electric teal design system, Framer Motion transitions, mobile responsive |
 
 ---
@@ -51,7 +51,7 @@ Industry + Competitors
   Audience Studio      →  3 buyer personas grounded in brand + market context
 ```
 
-Every Claude prompt in M2 and M3 is injected with the structured output of the previous module — so the personas aren't generic, they're built on top of your actual competitive landscape and brand voice.
+Every Claude prompt in M2 and M3 is injected with the structured output of the previous module, so the personas aren't generic. They're built on top of your actual competitive landscape and brand voice.
 
 ---
 
@@ -99,7 +99,7 @@ Fill in `.env.local`:
 # Anthropic
 ANTHROPIC_API_KEY=your_anthropic_api_key_here
 
-# Clerk (create app at clerk.com — enable Google OAuth)
+# Clerk (create app at clerk.com, enable Google OAuth)
 CLERK_SECRET_KEY=your_clerk_secret_key_here
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key_here
 
@@ -176,10 +176,10 @@ orbit/
 │   │       └── audience-studio/      # Module 3 UI
 │   ├── api/
 │   │   ├── ai/
-│   │   │   ├── analyze-market/       # Claude — market intelligence
-│   │   │   ├── build-brand/          # Claude — brand foundation
-│   │   │   └── generate-personas/    # Claude — audience personas
-│   │   └── projects/[id]/            # CRUD — project data
+│   │   │   ├── analyze-market/       # Claude: market intelligence
+│   │   │   ├── build-brand/          # Claude: brand foundation
+│   │   │   └── generate-personas/    # Claude: audience personas
+│   │   └── projects/[id]/            # CRUD: project data
 │   ├── layout.tsx                    # Root layout + ClerkProvider
 │   └── page.tsx                      # Public landing page
 ├── components/                       # shadcn/ui components
@@ -199,12 +199,12 @@ orbit/
 
 ## Roadmap
 
-- [ ] **PDF export** — download the full brand strategy as a branded PDF report
-- [ ] **Module 4: Campaign Builder** — generate a 4-week content calendar from persona + brand data
-- [ ] **Module 5: Ad Copy Generator** — platform-specific ad copy using persona hooks
-- [ ] **Project sharing** — shareable read-only links for client delivery
-- [ ] **Brand kit persistence** — save and reload brand inputs across sessions
-- [ ] **Multi-model routing** — use Haiku for lighter tasks, Sonnet for deep analysis
+- [ ] **PDF export**: download the full brand strategy as a branded PDF report
+- [ ] **Module 4: Campaign Builder**: generate a 4-week content calendar from persona + brand data
+- [ ] **Module 5: Ad Copy Generator**: platform-specific ad copy using persona hooks
+- [ ] **Project sharing**: shareable read-only links for client delivery
+- [ ] **Brand kit persistence**: save and reload brand inputs across sessions
+- [ ] **Multi-model routing**: use Haiku for lighter tasks, Sonnet for deep analysis
 
 ---
 
