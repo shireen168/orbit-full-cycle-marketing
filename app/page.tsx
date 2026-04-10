@@ -286,7 +286,7 @@ export default function LandingPage() {
             Orbit
           </span>
         </div>
-        <SignInButton mode="redirect">
+        <SignInButton mode="redirect" forceRedirectUrl="/dashboard">
           <StarButton />
         </SignInButton>
       </motion.nav>
@@ -381,9 +381,9 @@ export default function LandingPage() {
 
           {/* CTAs */}
           <motion.div variants={fadeUp(0.24)} className="flex items-center justify-center mt-2">
-            <SignUpButton mode="redirect">
+            <SignUpButton mode="redirect" forceRedirectUrl="/dashboard">
               <GlowButton>
-                Get started free <ArrowRight size={14} />
+                Start for free <ArrowRight size={14} />
               </GlowButton>
             </SignUpButton>
           </motion.div>
@@ -503,7 +503,7 @@ export default function LandingPage() {
             >
               Free to start. No credit card required. Run your first market analysis in minutes.
             </p>
-            <SignUpButton mode="redirect">
+            <SignUpButton mode="redirect" forceRedirectUrl="/dashboard">
               <GlowButton className="relative">
                 Start for free <ArrowRight size={14} />
               </GlowButton>
@@ -566,6 +566,9 @@ export default function LandingPage() {
         /* ── Conic gradient glow button (wiki: button-conic-gradient-glow) ── */
         .orbit-cta-btn {
           position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           padding: 14px 28px;
           font-size: 14px;
           font-weight: 600;
@@ -623,6 +626,7 @@ export default function LandingPage() {
           align-items: center;
           justify-content: center;
           gap: 8px;
+          width: 100%;
           color: transparent;
           background: conic-gradient(
             from 0deg,
