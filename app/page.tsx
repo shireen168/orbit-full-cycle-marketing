@@ -56,12 +56,13 @@ const steps = [
 
 /* ─── sub-components ─────────────────────────────────────── */
 
-function GlowButton({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+function GlowButton({ children, className = "", onClick }: { children: React.ReactNode; className?: string; onClick?: React.MouseEventHandler<HTMLButtonElement> }) {
   return (
     <motion.button
       className={`orbit-cta-btn ${className}`}
       whileTap={{ scale: 0.98 }}
       type="button"
+      onClick={onClick}
     >
       <span className="orbit-cta-btn-text">{children}</span>
     </motion.button>
@@ -378,18 +379,9 @@ export default function LandingPage() {
               </GlowButton>
             </SignUpButton>
             <SignInButton mode="redirect">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="px-7 py-3.5 rounded-full text-sm font-semibold tracking-wide transition-colors duration-200"
-                style={{
-                  color: "oklch(0.78 0.015 260)",
-                  border: "1px solid oklch(1 0 0 / 0.12)",
-                  background: "oklch(1 0 0 / 0.04)",
-                }}
-              >
-                Sign in
-              </motion.button>
+              <GlowButton>
+                Sign in <ChevronRight size={14} />
+              </GlowButton>
             </SignInButton>
           </motion.div>
         </motion.div>

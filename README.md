@@ -4,7 +4,7 @@
 
 **Orbit** is a full-stack AI marketing tool that takes a product from zero context to a complete brand strategy — competitive landscape mapped, positioning defined, and high-fidelity buyer personas generated — all in one sequential workflow powered by Claude AI.
 
-Built with **Next.js 16**, **Clerk authentication**, **Supabase**, and **Claude claude-sonnet-4-6**.
+Built with **Next.js 16**, **Clerk authentication**, **Supabase**, and **Claude Sonnet 4.6**.
 
 **Live demo:** [orbit-mkt.vercel.app](https://orbit-mkt.vercel.app)
 
@@ -60,7 +60,7 @@ Every Claude prompt in M2 and M3 is injected with the structured output of the p
 | Layer | Technology |
 |-------|------------|
 | Framework | Next.js 16 (App Router, Turbopack) |
-| AI | Claude claude-sonnet-4-6 via Anthropic API |
+| AI | Claude Sonnet 4.6 via Anthropic API |
 | Auth | Clerk (Google OAuth, middleware-protected routes) |
 | Database | Supabase (PostgreSQL + Row Level Security) |
 | Rate limiting | Upstash Redis (sliding window, 30 calls/day per user) |
