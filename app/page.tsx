@@ -10,7 +10,7 @@ import { LandingHero } from "@/components/landing/landing-hero";
 import { ModuleCard, modules, cardVariant } from "@/components/landing/module-card";
 import { StepRow, steps } from "@/components/landing/step-row";
 import { StarButton } from "@/components/landing/star-button";
-import { GlowButton } from "@/components/landing/glow-button";
+import { RidgeButton } from "@/components/landing/ridge-button";
 
 const stagger = { animate: { transition: { staggerChildren: 0.12 } } };
 
@@ -78,7 +78,7 @@ export default function LandingPage() {
               Free to start. No credit card required. Run your first market analysis in minutes.
             </p>
             <SignUpButton mode="redirect" forceRedirectUrl="/dashboard">
-              <GlowButton className="relative">Start for free <ArrowRight size={14} /></GlowButton>
+              <RidgeButton className="relative">Start for free <ArrowRight size={14} /></RidgeButton>
             </SignUpButton>
           </motion.div>
         </div>

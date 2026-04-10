@@ -159,6 +159,58 @@
   background-size: 50px 50px;
   opacity: 0.5;
 }
+/* Ridge border button */
+.orbit-ridge-btn {
+  width: 12em;
+  position: relative;
+  height: 3.5em;
+  border: 3px ridge #2dd4bf;
+  outline: none;
+  background-color: transparent;
+  color: white;
+  transition: 1s;
+  border-radius: 0.3em;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  isolation: isolate;
+}
+.orbit-ridge-btn::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 3%;
+  width: 95%;
+  height: 40%;
+  background-color: oklch(0.09 0.008 265);
+  transition: 0.5s;
+  transform-origin: center;
+  z-index: -1;
+}
+.orbit-ridge-btn::before {
+  content: "";
+  transform-origin: center;
+  position: absolute;
+  top: 80%;
+  left: 3%;
+  width: 95%;
+  height: 40%;
+  background-color: oklch(0.09 0.008 265);
+  transition: 0.5s;
+  z-index: -1;
+}
+.orbit-ridge-btn:hover::before,
+.orbit-ridge-btn:hover::after {
+  transform: scale(0);
+}
+.orbit-ridge-btn:hover {
+  box-shadow: inset 0px 0px 25px #2dd4bf;
+}
+
 @keyframes animStar {
   from { transform: translateY(0); }
   to   { transform: translateY(-135rem); }

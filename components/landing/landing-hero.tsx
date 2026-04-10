@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { SignUpButton } from "@clerk/nextjs";
 import { ArrowRight } from "lucide-react";
-import { GlowButton } from "./glow-button";
+import { RidgeButton } from "./ridge-button";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 32 },
@@ -43,7 +43,7 @@ export function LandingHero() {
 
         <motion.div variants={fadeUp(0.24)} className="flex items-center justify-center mt-2">
           <SignUpButton mode="redirect" forceRedirectUrl="/dashboard">
-            <GlowButton>Start for free <ArrowRight size={14} /></GlowButton>
+            <RidgeButton>Start for free <ArrowRight size={14} /></RidgeButton>
           </SignUpButton>
         </motion.div>
       </motion.div>
