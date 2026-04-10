@@ -58,32 +58,13 @@ const steps = [
 
 function GlowButton({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <motion.div
-      className={`relative group cursor-pointer ${className}`}
-      whileHover={{ scale: 1.03 }}
+    <motion.button
+      className={`orbit-cta-btn ${className}`}
       whileTap={{ scale: 0.98 }}
+      type="button"
     >
-      {/* glow layer */}
-      <span
-        className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{
-          background: "radial-gradient(ellipse at center, oklch(0.72 0.16 185 / 0.45) 0%, transparent 70%)",
-          filter: "blur(12px)",
-          transform: "scale(1.3)",
-        }}
-      />
-      {/* border pulse */}
-      <span className="absolute inset-0 rounded-full border border-[oklch(0.72_0.16_185/_0.6)] group-hover:border-[oklch(0.72_0.16_185)] transition-colors duration-300" />
-      <span
-        className="relative flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold tracking-wide"
-        style={{
-          background: "oklch(0.72 0.16 185 / 0.12)",
-          color: "oklch(0.72 0.16 185)",
-        }}
-      >
-        {children}
-      </span>
-    </motion.div>
+      <span className="orbit-cta-btn-text">{children}</span>
+    </motion.button>
   );
 }
 
@@ -208,21 +189,45 @@ export default function LandingPage() {
       className="min-h-screen flex flex-col relative overflow-x-hidden"
       style={{ background: "oklch(0.09 0.008 265)", color: "oklch(0.93 0.006 260)" }}
     >
-      {/* ── background grid + orbs ── */}
+      {/* ── background grid + orbs + beams ── */}
       <div className="fixed inset-0 pointer-events-none" aria-hidden>
         {/* dot grid */}
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: "radial-gradient(oklch(1 0 0 / 0.06) 1px, transparent 1px)",
+            backgroundImage: "radial-gradient(oklch(1 0 0 / 0.055) 1px, transparent 1px)",
             backgroundSize: "32px 32px",
           }}
         />
+        {/* animated diagonal beams — inspired by kokonutd/beams-background */}
+        <div className="absolute inset-0 overflow-hidden">
+          {[
+            { left: "8%",  delay: "0s",    dur: "8s",  opacity: 0.18 },
+            { left: "22%", delay: "2.5s",  dur: "11s", opacity: 0.12 },
+            { left: "40%", delay: "1s",    dur: "9s",  opacity: 0.15 },
+            { left: "58%", delay: "4s",    dur: "13s", opacity: 0.10 },
+            { left: "74%", delay: "0.5s",  dur: "10s", opacity: 0.14 },
+            { left: "88%", delay: "3.2s",  dur: "7s",  opacity: 0.11 },
+          ].map((b, i) => (
+            <div
+              key={i}
+              className="absolute top-0 w-px"
+              style={{
+                left: b.left,
+                height: "100%",
+                background: `linear-gradient(to bottom, transparent 0%, oklch(0.72 0.16 185 / ${b.opacity}) 30%, oklch(0.72 0.16 185 / ${b.opacity * 1.4}) 50%, oklch(0.72 0.16 185 / ${b.opacity}) 70%, transparent 100%)`,
+                animation: `beam-fall ${b.dur} linear ${b.delay} infinite`,
+                transform: "skewX(-12deg)",
+                willChange: "transform, opacity",
+              }}
+            />
+          ))}
+        </div>
         {/* teal orb — top left */}
         <div
           className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full"
           style={{
-            background: "radial-gradient(circle, oklch(0.72 0.16 185 / 0.12) 0%, transparent 70%)",
+            background: "radial-gradient(circle, oklch(0.72 0.16 185 / 0.14) 0%, transparent 70%)",
             filter: "blur(40px)",
             animation: "float1 12s ease-in-out infinite",
           }}
@@ -231,16 +236,16 @@ export default function LandingPage() {
         <div
           className="absolute -bottom-60 -right-40 w-[700px] h-[700px] rounded-full"
           style={{
-            background: "radial-gradient(circle, oklch(0.72 0.16 185 / 0.09) 0%, transparent 70%)",
+            background: "radial-gradient(circle, oklch(0.72 0.16 185 / 0.10) 0%, transparent 70%)",
             filter: "blur(60px)",
             animation: "float2 16s ease-in-out infinite",
           }}
         />
         {/* mid accent orb */}
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full"
           style={{
-            background: "radial-gradient(circle, oklch(0.72 0.16 185 / 0.05) 0%, transparent 70%)",
+            background: "radial-gradient(circle, oklch(0.72 0.16 185 / 0.06) 0%, transparent 70%)",
             filter: "blur(80px)",
             animation: "float3 20s ease-in-out infinite",
           }}
@@ -339,7 +344,7 @@ export default function LandingPage() {
           {/* headline */}
           <motion.h1
             variants={fadeUp(0.08)}
-            className="text-5xl md:text-7xl font-extrabold leading-[1.05] tracking-tight"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.1] tracking-tight"
             style={{ fontFamily: "var(--font-syne)" }}
           >
             From market gap{" "}
@@ -515,14 +520,25 @@ export default function LandingPage() {
       {/* ── footer ── */}
       <footer
         className="relative z-10 flex items-center justify-center px-6 py-6 border-t"
-        style={{ borderColor: "oklch(1 0 0 / 0.06)", color: "oklch(0.6 0.01 260)" }}
+        style={{ borderColor: "oklch(1 0 0 / 0.06)", color: "oklch(0.55 0.01 260)" }}
       >
-        <span className="text-xs" style={{ fontFamily: "var(--font-syne)" }}>
-          © {new Date().getFullYear()} Orbit
+        <span className="text-xs text-center" style={{ fontFamily: "var(--font-syne)" }}>
+          © {new Date().getFullYear()} Orbit &nbsp;·&nbsp; Built by{" "}
+          <a
+            href="https://github.com/shireen-mvps"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "oklch(0.72 0.16 185)", textDecoration: "none" }}
+            onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.textDecoration = "underline")}
+            onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.textDecoration = "none")}
+          >
+            Shireen
+          </a>
+          &nbsp;·&nbsp; Powered by Claude Code
         </span>
       </footer>
 
-      {/* ── keyframes ── */}
+      {/* ── keyframes + button styles ── */}
       <style jsx global>{`
         @keyframes float1 {
           0%, 100% { transform: translate(0, 0) scale(1); }
@@ -541,6 +557,89 @@ export default function LandingPage() {
         @keyframes pulse {
           0%, 100% { opacity: 1; }
           50% { opacity: 0.4; }
+        }
+        @keyframes beam-fall {
+          0%   { transform: skewX(-12deg) translateY(-100%); opacity: 0; }
+          8%   { opacity: 1; }
+          92%  { opacity: 1; }
+          100% { transform: skewX(-12deg) translateY(100vh); opacity: 0; }
+        }
+        @keyframes hue-rotating {
+          to { filter: hue-rotate(360deg); }
+        }
+
+        /* ── Conic gradient glow button (wiki: button-conic-gradient-glow) ── */
+        .orbit-cta-btn {
+          position: relative;
+          padding: 14px 28px;
+          font-size: 14px;
+          font-weight: 600;
+          letter-spacing: 0.03em;
+          color: white;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          border-radius: 50px;
+          overflow: hidden;
+          transition: transform 0.2s ease;
+        }
+        .orbit-cta-btn:hover {
+          transform: scale(1.04);
+        }
+        .orbit-cta-btn:active {
+          transform: scale(0.98);
+        }
+        .orbit-cta-btn::before {
+          content: "";
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: conic-gradient(
+            from 0deg,
+            #2dd4bf,
+            #06b6d4,
+            #3b82f6,
+            #8b5cf6,
+            #2dd4bf
+          );
+          z-index: -2;
+          filter: blur(10px);
+          transform: rotate(0deg);
+          transition: transform 1.5s ease-in-out;
+        }
+        .orbit-cta-btn:hover::before {
+          transform: rotate(180deg);
+        }
+        .orbit-cta-btn::after {
+          content: "";
+          position: absolute;
+          inset: 3px;
+          background: oklch(0.09 0.008 265);
+          border-radius: 47px;
+          z-index: -1;
+        }
+        .orbit-cta-btn-text {
+          position: relative;
+          z-index: 1;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          color: transparent;
+          background: conic-gradient(
+            from 0deg,
+            #2dd4bf,
+            #06b6d4,
+            #67e8f9,
+            #a5f3fc,
+            #2dd4bf
+          );
+          -webkit-background-clip: text;
+          background-clip: text;
+        }
+        .orbit-cta-btn:hover .orbit-cta-btn-text {
+          animation: hue-rotating 2s linear infinite;
         }
       `}</style>
     </div>
