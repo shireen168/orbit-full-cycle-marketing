@@ -21,7 +21,7 @@ export async function POST(req: Request) {
   const { success, remaining } = await rateLimiter.limit(userId);
   if (!success) {
     return NextResponse.json(
-      { error: "Daily AI credit limit reached (10/day). Try again tomorrow." },
+      { error: "Daily demo limit reached (3 generations/day). Clone the repo to run your own instance: github.com/shireen-mvps/orbit-full-cycle-marketing" },
       { status: 429, headers: { "X-Credits-Remaining": "0" } }
     );
   }
