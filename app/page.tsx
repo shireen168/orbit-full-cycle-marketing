@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
-import { BarChart3, Layers, Users, ArrowRight, ChevronRight } from "lucide-react";
+import { BarChart3, Layers, Users, ArrowRight } from "lucide-react";
 
 /* ─── animation variants ─────────────────────────────────── */
 const fadeUp = (delay = 0) => ({
@@ -372,17 +372,12 @@ export default function LandingPage() {
           </motion.p>
 
           {/* CTAs */}
-          <motion.div variants={fadeUp(0.24)} className="flex flex-col sm:flex-row gap-3 mt-2">
+          <motion.div variants={fadeUp(0.24)} className="flex items-center justify-center mt-2">
             <SignUpButton mode="redirect">
               <GlowButton>
                 Get started free <ArrowRight size={14} />
               </GlowButton>
             </SignUpButton>
-            <SignInButton mode="redirect">
-              <GlowButton>
-                Sign in <ChevronRight size={14} />
-              </GlowButton>
-            </SignInButton>
           </motion.div>
         </motion.div>
 
@@ -573,6 +568,7 @@ export default function LandingPage() {
           cursor: pointer;
           border-radius: 50px;
           overflow: hidden;
+          isolation: isolate;
           transition: transform 0.2s ease;
         }
         .orbit-cta-btn:hover {
@@ -617,6 +613,7 @@ export default function LandingPage() {
           z-index: 1;
           display: flex;
           align-items: center;
+          justify-content: center;
           gap: 8px;
           color: transparent;
           background: conic-gradient(
