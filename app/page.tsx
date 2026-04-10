@@ -56,6 +56,21 @@ const steps = [
 
 /* ─── sub-components ─────────────────────────────────────── */
 
+function StarButton({ onClick }: { onClick?: React.MouseEventHandler<HTMLButtonElement> }) {
+  return (
+    <button className="orbit-star-btn" onClick={onClick} type="button">
+      <strong>Sign in</strong>
+      <div className="orbit-star-container">
+        <div className="orbit-star-field" />
+      </div>
+      <div className="orbit-star-glow">
+        <div className="orbit-circle" />
+        <div className="orbit-circle" />
+      </div>
+    </button>
+  );
+}
+
 function GlowButton({ children, className = "", onClick }: { children: React.ReactNode; className?: string; onClick?: React.MouseEventHandler<HTMLButtonElement> }) {
   return (
     <motion.button
@@ -272,14 +287,7 @@ export default function LandingPage() {
           </span>
         </div>
         <SignInButton mode="redirect">
-          <button
-            className="flex items-center gap-1.5 text-sm font-medium transition-colors duration-200"
-            style={{ color: "oklch(0.78 0.015 260)" }}
-            onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "oklch(0.93 0.006 260)")}
-            onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "oklch(0.78 0.015 260)")}
-          >
-            Sign in <ChevronRight size={14} />
-          </button>
+          <StarButton />
         </SignInButton>
       </motion.nav>
 
@@ -629,6 +637,125 @@ export default function LandingPage() {
         }
         .orbit-cta-btn:hover .orbit-cta-btn-text {
           animation: hue-rotating 2s linear infinite;
+        }
+
+        /* ── Star nav button (uiverse.io/StealthWorm) ── */
+        .orbit-star-btn {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 9rem;
+          overflow: hidden;
+          height: 2.6rem;
+          background-size: 300% 300%;
+          cursor: pointer;
+          backdrop-filter: blur(1rem);
+          border-radius: 5rem;
+          transition: 0.5s;
+          animation: gradient_301 5s ease infinite;
+          border: double 4px transparent;
+          background-image: linear-gradient(#212121, #212121),
+            linear-gradient(137.48deg, #ffdb3b 10%, #fe53bb 45%, #8f51ea 67%, #0044ff 87%);
+          background-origin: border-box;
+          background-clip: content-box, border-box;
+          position: relative;
+        }
+        .orbit-star-btn strong {
+          z-index: 2;
+          font-family: var(--font-syne);
+          font-size: 12px;
+          letter-spacing: 3px;
+          color: #ffffff;
+          text-shadow: 0 0 4px white;
+          font-weight: 600;
+        }
+        .orbit-star-container {
+          position: absolute;
+          z-index: -1;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+          transition: 0.5s;
+          backdrop-filter: blur(1rem);
+          border-radius: 5rem;
+        }
+        .orbit-star-btn:hover .orbit-star-container {
+          z-index: 1;
+          background-color: #212121;
+        }
+        .orbit-star-btn:hover {
+          transform: scale(1.1);
+        }
+        .orbit-star-btn:active {
+          border: double 4px #fe53bb;
+          background-origin: border-box;
+          background-clip: content-box, border-box;
+          animation: none;
+        }
+        .orbit-star-btn:active .orbit-circle {
+          background: #fe53bb;
+        }
+        .orbit-star-glow {
+          position: absolute;
+          display: flex;
+          width: 12rem;
+        }
+        .orbit-circle {
+          width: 100%;
+          height: 30px;
+          filter: blur(2rem);
+          animation: pulse_3011 4s infinite;
+          z-index: -1;
+        }
+        .orbit-circle:nth-of-type(1) { background: rgba(254, 83, 186, 0.636); }
+        .orbit-circle:nth-of-type(2) { background: rgba(142, 81, 234, 0.704); }
+        .orbit-star-field {
+          position: relative;
+          background: transparent;
+          width: 200rem;
+          height: 200rem;
+        }
+        .orbit-star-field::before,
+        .orbit-star-field::after {
+          content: "";
+          position: absolute;
+        }
+        .orbit-star-field::after {
+          top: -10rem;
+          left: -100rem;
+          width: 100%;
+          height: 100%;
+          animation: animStarRotate 90s linear infinite;
+          background-image: radial-gradient(#ffffff 1px, transparent 1%);
+          background-size: 50px 50px;
+        }
+        .orbit-star-field::before {
+          top: 0;
+          left: -50%;
+          width: 170%;
+          height: 500%;
+          animation: animStar 60s linear infinite;
+          background-image: radial-gradient(#ffffff 1px, transparent 1%);
+          background-size: 50px 50px;
+          opacity: 0.5;
+        }
+        @keyframes animStar {
+          from { transform: translateY(0); }
+          to   { transform: translateY(-135rem); }
+        }
+        @keyframes animStarRotate {
+          from { transform: rotate(360deg); }
+          to   { transform: rotate(0); }
+        }
+        @keyframes gradient_301 {
+          0%   { background-position: 0% 50%; }
+          50%  { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        @keyframes pulse_3011 {
+          0%   { transform: scale(0.75); box-shadow: 0 0 0 0 rgba(0,0,0,0.7); }
+          70%  { transform: scale(1);    box-shadow: 0 0 0 10px rgba(0,0,0,0); }
+          100% { transform: scale(0.75); box-shadow: 0 0 0 0 rgba(0,0,0,0); }
         }
       `}</style>
     </div>
