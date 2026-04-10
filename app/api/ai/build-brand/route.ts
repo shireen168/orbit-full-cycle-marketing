@@ -21,7 +21,7 @@ export async function POST(req: Request) {
   const { success, remaining } = await rateLimiter.limit(userId);
   if (!success) {
     return NextResponse.json(
-      { error: "Daily demo limit reached (6 credits/day). Clone the repo to run your own instance: github.com/shireen-mvps/orbit-full-cycle-marketing" },
+      { error: "Daily demo limit reached (30 credits/day). Clone the repo to run your own instance: github.com/shireen-mvps/orbit-full-cycle-marketing" },
       { status: 429, headers: { "X-Credits-Remaining": "0" } }
     );
   }
@@ -96,7 +96,7 @@ ${m1Context ? "- Reference the market gaps and whitespace opportunities in your 
 
   try {
     const message = await anthropic.messages.create({
-      model: MODEL.deep,
+      model: MODEL.fast,
       max_tokens: 1500,
       messages: [{ role: "user", content: prompt }],
     });

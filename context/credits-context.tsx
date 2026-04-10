@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState } from "react";
 
-export const CREDITS_TOTAL = 6;
+export const CREDITS_TOTAL = 30;
 
 interface CreditsContextValue {
   remaining: number | null;

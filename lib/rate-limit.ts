@@ -3,10 +3,10 @@ import { Redis } from "@upstash/redis";
 
 const redis = Redis.fromEnv();
 
-// Per-user: 6 AI calls/day (1 gen + 1 regen per module -- demo mode)
+// Per-user: 30 AI calls/day (generous demo -- using Haiku for cost efficiency)
 export const rateLimiter = new Ratelimit({
   redis,
-  limiter: Ratelimit.slidingWindow(6, "1 d"),
+  limiter: Ratelimit.slidingWindow(30, "1 d"),
   prefix: "orbit:ai",
 });
 

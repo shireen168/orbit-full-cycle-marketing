@@ -20,7 +20,7 @@ export async function POST(req: Request) {
   const { success, remaining } = await rateLimiter.limit(userId);
   if (!success) {
     return NextResponse.json(
-      { error: "Daily demo limit reached (6 credits/day). Clone the repo to run your own instance: github.com/shireen-mvps/orbit-full-cycle-marketing" },
+      { error: "Daily demo limit reached (30 credits/day). Clone the repo to run your own instance: github.com/shireen-mvps/orbit-full-cycle-marketing" },
       { status: 429, headers: { "X-Credits-Remaining": "0" } }
     );
   }
@@ -82,7 +82,9 @@ Return this exact JSON structure:
       "strengths": ["strength 1", "strength 2", "strength 3"],
       "weaknesses": ["weakness 1", "weakness 2"],
       "priceScore": 7,
-      "featureScore": 5
+      "featureScore": 5,
+      "reputationScore": 6,
+      "reachScore": 4
     }
   ],
   "marketGaps": ["specific unmet need 1", "specific unmet need 2", "specific unmet need 3", "specific unmet need 4"],
@@ -91,8 +93,10 @@ Return this exact JSON structure:
 }
 
 Rules:
-- priceScore: 1 (free/very cheap) to 10 (very expensive/enterprise-only)
-- featureScore: 1 (minimal/simple) to 10 (feature-rich/complex)
+- priceScore: 1 (free/budget) to 10 (very expensive/enterprise-only)
+- featureScore: 1 (basic/low quality) to 10 (feature-rich/high quality)
+- reputationScore: 1 (unknown/new) to 10 (dominant/well-established brand)
+- reachScore: 1 (niche audience) to 10 (mass market/broad reach)
 - Include every competitor listed above in competitorMap
 - marketGaps: specific unmet customer needs, not generic observations
 - whitespaceOpportunities: concrete positioning angles to differentiate a new entrant
@@ -100,7 +104,7 @@ Rules:
 
   try {
     const message = await anthropic.messages.create({
-      model: MODEL.deep,
+      model: MODEL.fast,
       max_tokens: 2000,
       messages: [{ role: "user", content: prompt }],
     });

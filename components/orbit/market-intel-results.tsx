@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowRight, ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { MarketIntel } from "@/types/orbit";
-import { PositioningChart } from "./positioning-chart";
+import { RadarChart } from "./radar-chart";
 
 export function MarketIntelResults({ results, projectId }: { results: MarketIntel; projectId: string }) {
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -22,7 +22,7 @@ export function MarketIntelResults({ results, projectId }: { results: MarketInte
       {results.competitorMap?.length > 0 && (
         <div>
           <p className="text-[10px] uppercase tracking-widest text-[var(--muted-foreground)] mb-3 font-heading">Competitive Positioning</p>
-          <PositioningChart competitors={results.competitorMap} />
+          <RadarChart competitors={results.competitorMap} />
         </div>
       )}
 

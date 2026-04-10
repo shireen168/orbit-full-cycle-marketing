@@ -11,8 +11,10 @@ export interface Competitor {
   description: string;
   strengths: string[];
   weaknesses: string[];
-  priceScore?: number;    // 1-10: 1=free/cheap, 10=enterprise/premium
-  featureScore?: number;  // 1-10: 1=minimal, 10=feature-rich
+  priceScore?: number;      // 1-10: 1=budget, 10=premium
+  featureScore?: number;    // 1-10: 1=basic, 10=feature-rich/high quality
+  reputationScore?: number; // 1-10: 1=unknown, 10=well-established brand
+  reachScore?: number;      // 1-10: 1=niche, 10=mass market
 }
 
 export interface PositioningAxis {
