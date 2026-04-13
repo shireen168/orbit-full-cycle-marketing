@@ -1,9 +1,19 @@
+export interface UserBrandScores {
+  name: string;
+  priceScore: number;
+  featureScore: number;
+  reputationScore: number;
+  reachScore: number;
+}
+
 export interface MarketIntel {
   summary?: string;
   competitorMap: Competitor[];
+  userBrand?: UserBrandScores;
   marketGaps: string[];
   whitespaceOpportunities: string[];
   positioning: PositioningAxis[];
+  citations?: string[];
 }
 
 export interface Competitor {
@@ -53,6 +63,58 @@ export interface Persona {
   sampleAdHook: string;
 }
 
+export interface CampaignConcept {
+  name: string;
+  hook: string;
+  angle: string;
+  coreMessage: string;
+  cta: string;
+  personaTarget: string;
+}
+
+export interface ChannelRecommendation {
+  channel: string;
+  budgetPercent: number;
+  rationale: string;
+}
+
+export interface CampaignPlan {
+  brief: {
+    campaignTitle: string;
+    objectiveStatement: string;
+    primaryMessage: string;
+    targetSegment: string;
+    keyInsight: string;
+    successMetrics: string[];
+  };
+  messageArchitecture: {
+    primaryMessage: string;
+    supportingMessages: string[];
+    objectionHandlers: string[];
+  };
+  channelMix: ChannelRecommendation[];
+  concepts: CampaignConcept[];
+  selectedConcept: number | null;
+}
+
+export interface ContentVariant {
+  format: string;
+  headline: string;
+  body: string;
+  cta: string;
+}
+
+export interface RepurposeRow {
+  format: string;
+  adaptation: string;
+}
+
+export interface ContentStudio {
+  selectedConceptName: string;
+  variants: ContentVariant[];
+  repurposeMatrix: RepurposeRow[];
+}
+
 export interface OrbitProject {
   id: string;
   user_id: string;
@@ -60,8 +122,8 @@ export interface OrbitProject {
   market_intel: MarketIntel | null;
   brand_foundation: BrandFoundation | null;
   audience_studio: AudienceStudio | null;
-  campaign_plan: null;
-  content_studio: null;
+  campaign_plan: CampaignPlan | null;
+  content_studio: ContentStudio | null;
   performance_data: null;
   ai_calls_today: number;
   created_at: string;

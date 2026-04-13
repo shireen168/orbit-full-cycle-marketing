@@ -31,7 +31,7 @@ export async function PATCH(
   const { id } = await params;
   const body = await req.json();
 
-  const allowed = ["market_intel", "brand_foundation", "audience_studio", "name"];
+  const allowed = ["market_intel", "brand_foundation", "audience_studio", "campaign_plan", "content_studio", "name"];
   const updates: Record<string, unknown> = { updated_at: new Date().toISOString() };
   for (const key of allowed) {
     if (key in body) updates[key] = body[key];
@@ -47,4 +47,22 @@ export async function PATCH(
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json(data);
+}
+
+export async function DELETE(
+  _req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { userId } = await auth();
+  if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const { id } = await params;
+  const { error } = await supabase
+    .from("orbit_projects")
+    .delete()
+    .eq("id", id)
+    .eq("user_id", userId);
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return new Response(null, { status: 204 });
 }

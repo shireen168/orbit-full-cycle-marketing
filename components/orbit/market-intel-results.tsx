@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, ChevronDown, ChevronUp } from "lucide-react";
+import { ArrowRight, ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { MarketIntel } from "@/types/orbit";
 import { RadarChart } from "./radar-chart";
@@ -22,7 +22,7 @@ export function MarketIntelResults({ results, projectId }: { results: MarketInte
       {results.competitorMap?.length > 0 && (
         <div>
           <p className="text-[10px] uppercase tracking-widest text-[var(--muted-foreground)] mb-3 font-heading">Competitive Positioning</p>
-          <RadarChart competitors={results.competitorMap} />
+          <RadarChart competitors={results.competitorMap} userBrand={results.userBrand} />
         </div>
       )}
 
@@ -42,7 +42,11 @@ export function MarketIntelResults({ results, projectId }: { results: MarketInte
                 <AnimatePresence>
                   {expanded === c.name && (
                     <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden">
-                      <div className="px-5 pb-5 grid sm:grid-cols-2 gap-4 border-t border-[var(--border)] pt-4">
+                      <div className="px-5 pb-5 border-t border-[var(--border)] pt-4 space-y-4">
+                        {c.description && (
+                          <p className="text-sm text-[var(--muted-foreground)] leading-relaxed">{c.description}</p>
+                        )}
+                        <div className="grid sm:grid-cols-2 gap-4">
                         <div>
                           <p className="text-[10px] font-semibold text-emerald-400 uppercase tracking-wider mb-2">Strengths</p>
                           <ul className="space-y-1.5">{c.strengths.map((s, j) => <li key={j} className="text-sm text-[var(--foreground)] flex items-start gap-2"><span className="text-emerald-400 mt-0.5 shrink-0">+</span>{s}</li>)}</ul>
@@ -50,6 +54,7 @@ export function MarketIntelResults({ results, projectId }: { results: MarketInte
                         <div>
                           <p className="text-[10px] font-semibold text-rose-400 uppercase tracking-wider mb-2">Weaknesses</p>
                           <ul className="space-y-1.5">{c.weaknesses.map((w, j) => <li key={j} className="text-sm text-[var(--foreground)] flex items-start gap-2"><span className="text-rose-400 mt-0.5 shrink-0">-</span>{w}</li>)}</ul>
+                        </div>
                         </div>
                       </div>
                     </motion.div>
@@ -84,6 +89,27 @@ export function MarketIntelResults({ results, projectId }: { results: MarketInte
                 <span className="w-5 h-5 rounded-full bg-[var(--primary)] flex items-center justify-center text-[10px] font-bold text-[var(--primary-foreground)] shrink-0 mt-0.5">{i + 1}</span>
                 <p className="text-sm text-[var(--foreground)] leading-relaxed">{opp}</p>
               </motion.div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Citations from Perplexity */}
+      {results.citations && results.citations.length > 0 && (
+        <div>
+          <p className="text-[10px] uppercase tracking-widest text-[var(--muted-foreground)] mb-3 font-heading">Sources</p>
+          <div className="border border-[var(--border)] rounded-xl p-4 bg-[var(--card)] space-y-2">
+            {results.citations.map((url, i) => (
+              <a
+                key={i}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-2 text-xs text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors group"
+              >
+                <ExternalLink size={11} className="mt-0.5 shrink-0 group-hover:text-[var(--primary)]" />
+                <span className="break-all leading-relaxed">{url}</span>
+              </a>
             ))}
           </div>
         </div>

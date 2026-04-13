@@ -8,7 +8,7 @@ export async function GET() {
 
   const { data, error } = await supabase
     .from("orbit_projects")
-    .select("id, name, market_intel, brand_foundation, audience_studio, ai_calls_today, created_at, updated_at")
+    .select("id, name, market_intel, brand_foundation, audience_studio, campaign_plan, content_studio, ai_calls_today, created_at, updated_at")
     .eq("user_id", userId)
     .order("created_at", { ascending: false });
 

@@ -1,32 +1,33 @@
 "use client";
 
-import type { Competitor } from "@/types/orbit";
+import type { Competitor, UserBrandScores } from "@/types/orbit";
 
-const COLORS = ["#00d4b4", "#7c6ef8", "#f59e0b", "#ef4444", "#10b981"];
-const CX = 150;
-const CY = 150;
-const R  = 90;
+const COLORS = ["#7c6ef8", "#f59e0b", "#60a5fa", "#f97316", "#a78bfa"];
+const USER_COLOR = "#ef4444"; // red -- high contrast, distinct from all competitor colors
+
+// Enlarged ~35% from original
+const CX = 190;
+const CY = 190;
+const R  = 122;
 
 const AXES = [
-  { key: "reputationScore" as keyof Competitor, label: "Reputation",   ax: CX,     ay: CY - R },
-  { key: "reachScore"      as keyof Competitor, label: "Reach",        ax: CX + R, ay: CY     },
-  { key: "featureScore"    as keyof Competitor, label: "Quality",      ax: CX,     ay: CY + R },
-  { key: "priceScore"      as keyof Competitor, label: "Price",        ax: CX - R, ay: CY     },
+  { key: "reputationScore" as keyof Competitor, label: "Reputation", ax: CX,     ay: CY - R },
+  { key: "reachScore"      as keyof Competitor, label: "Reach",      ax: CX + R, ay: CY     },
+  { key: "featureScore"    as keyof Competitor, label: "Quality",    ax: CX,     ay: CY + R },
+  { key: "priceScore"      as keyof Competitor, label: "Price",      ax: CX - R, ay: CY     },
 ];
 
-// Label positions + text alignment per axis
 const LABEL_PROPS = [
-  { x: CX,         y: CY - R - 18, anchor: "middle" as const, baseline: "auto"    as const },
-  { x: CX + R + 16, y: CY,          anchor: "start"  as const, baseline: "middle"  as const },
-  { x: CX,         y: CY + R + 18, anchor: "middle" as const, baseline: "hanging" as const },
-  { x: CX - R - 16, y: CY,          anchor: "end"    as const, baseline: "middle"  as const },
+  { x: CX,          y: CY - R - 22, anchor: "middle" as const, baseline: "auto"    as const },
+  { x: CX + R + 20, y: CY,          anchor: "start"  as const, baseline: "middle"  as const },
+  { x: CX,          y: CY + R + 22, anchor: "middle" as const, baseline: "hanging" as const },
+  { x: CX - R - 20, y: CY,          anchor: "end"    as const, baseline: "middle"  as const },
 ];
 
-// Ring scale labels: show 2.5, 5, 7.5 on the top axis (inside the chart, slightly right)
 const RING_LABELS = [
-  { frac: 0.25, label: "2.5", x: CX + 5, y: CY - R * 0.25 - 3 },
-  { frac: 0.5,  label: "5",   x: CX + 5, y: CY - R * 0.5  - 3 },
-  { frac: 0.75, label: "7.5", x: CX + 5, y: CY - R * 0.75 - 3 },
+  { frac: 0.25, label: "2.5", x: CX + 6, y: CY - R * 0.25 - 4 },
+  { frac: 0.5,  label: "5",   x: CX + 6, y: CY - R * 0.5  - 4 },
+  { frac: 0.75, label: "7.5", x: CX + 6, y: CY - R * 0.75 - 4 },
 ];
 
 function toPoint(score: number | undefined, axisIdx: number): [number, number] {
@@ -46,11 +47,29 @@ function competitorPolygon(c: Competitor): string {
   }).join(" ");
 }
 
-export function RadarChart({ competitors }: { competitors: Competitor[] }) {
+function userBrandPolygon(ub: UserBrandScores): string {
+  const scoreMap: Record<string, number | undefined> = {
+    reputationScore: ub.reputationScore,
+    reachScore: ub.reachScore,
+    featureScore: ub.featureScore,
+    priceScore: ub.priceScore,
+  };
+  return AXES.map((axis, i) => {
+    const [x, y] = toPoint(scoreMap[axis.key as string], i);
+    return `${x},${y}`;
+  }).join(" ");
+}
+
+interface Props {
+  competitors: Competitor[];
+  userBrand?: UserBrandScores;
+}
+
+export function RadarChart({ competitors, userBrand }: Props) {
   return (
     <div className="border border-[var(--border)] rounded-xl p-5 bg-[var(--card)]">
-      <div className="w-full max-w-xs mx-auto">
-        <svg viewBox="0 0 300 300" className="w-full" style={{ overflow: "visible" }}>
+      <div className="w-full max-w-sm mx-auto">
+        <svg viewBox="0 0 380 380" className="w-full" style={{ overflow: "visible" }}>
           <defs>
             <filter id="radar-glow" x="-30%" y="-30%" width="160%" height="160%">
               <feGaussianBlur stdDeviation="2.5" result="blur" />
@@ -68,7 +87,6 @@ export function RadarChart({ competitors }: { competitors: Competitor[] }) {
             </filter>
           </defs>
 
-          {/* Grid rings — animated in with stagger */}
           {[0.25, 0.5, 0.75, 1].map((frac, i) => (
             <polygon
               key={frac}
@@ -81,7 +99,6 @@ export function RadarChart({ competitors }: { competitors: Competitor[] }) {
             />
           ))}
 
-          {/* Axis lines */}
           {AXES.map(({ ax, ay, label }) => (
             <line
               key={label}
@@ -92,13 +109,12 @@ export function RadarChart({ competitors }: { competitors: Competitor[] }) {
             />
           ))}
 
-          {/* Ring scale labels */}
           {RING_LABELS.map(({ label, x, y, frac }) => (
             <text
               key={frac}
               x={x} y={y}
               fill="rgba(0,212,180,0.55)"
-              fontSize={8}
+              fontSize={9}
               fontWeight="500"
               textAnchor="start"
               dominantBaseline="auto"
@@ -107,12 +123,11 @@ export function RadarChart({ competitors }: { competitors: Competitor[] }) {
             </text>
           ))}
 
-          {/* Center dot */}
           <circle cx={CX} cy={CY} r={3} fill="rgba(0,212,180,0.5)" filter="url(#dot-glow)">
             <animate attributeName="opacity" values="0.5;1;0.5" dur="3s" repeatCount="indefinite" />
           </circle>
 
-          {/* Competitor polygons — staggered animation */}
+          {/* Competitor polygons */}
           {competitors.map((c, i) => (
             <polygon
               key={c.name}
@@ -127,6 +142,21 @@ export function RadarChart({ competitors }: { competitors: Competitor[] }) {
             />
           ))}
 
+          {/* User brand polygon -- dashed, distinct color */}
+          {userBrand && (
+            <polygon
+              className="radar-polygon"
+              points={userBrandPolygon(userBrand)}
+              fill={USER_COLOR}
+              fillOpacity={0.07}
+              stroke={USER_COLOR}
+              strokeWidth={1.5}
+              strokeOpacity={0.9}
+              strokeDasharray="5 3"
+              style={{ animationDelay: `${0.28 + competitors.length * 0.12}s` }}
+            />
+          )}
+
           {/* Competitor vertex dots */}
           {competitors.map((c, i) =>
             AXES.map((_, axIdx) => {
@@ -134,7 +164,7 @@ export function RadarChart({ competitors }: { competitors: Competitor[] }) {
               return (
                 <circle
                   key={`${c.name}-${axIdx}`}
-                  cx={x} cy={y} r={3.5}
+                  cx={x} cy={y} r={4}
                   fill={COLORS[i % COLORS.length]}
                   opacity={0}
                   filter="url(#dot-glow)"
@@ -147,7 +177,29 @@ export function RadarChart({ competitors }: { competitors: Competitor[] }) {
             })
           )}
 
-          {/* Axis labels */}
+          {/* User brand vertex dots */}
+          {userBrand && AXES.map((axis, axIdx) => {
+            const scoreMap: Record<string, number | undefined> = {
+              reputationScore: userBrand.reputationScore,
+              reachScore: userBrand.reachScore,
+              featureScore: userBrand.featureScore,
+              priceScore: userBrand.priceScore,
+            };
+            const [x, y] = toPoint(scoreMap[axis.key as string], axIdx);
+            return (
+              <circle
+                key={`ub-${axIdx}`}
+                cx={x} cy={y} r={4}
+                fill={USER_COLOR}
+                opacity={0}
+                style={{
+                  animation: "radar-fade-in 0.4s ease-out forwards",
+                  animationDelay: `${0.5 + competitors.length * 0.12 + axIdx * 0.04}s`,
+                }}
+              />
+            );
+          })}
+
           {AXES.map(({ label }, i) => {
             const { x, y, anchor, baseline } = LABEL_PROPS[i];
             return (
@@ -156,8 +208,8 @@ export function RadarChart({ competitors }: { competitors: Competitor[] }) {
                 x={x} y={y}
                 textAnchor={anchor}
                 dominantBaseline={baseline}
-                fill="rgba(0,212,180,0.85)"
-                fontSize={10}
+                fill="rgba(0,212,180,0.9)"
+                fontSize={12}
                 fontWeight="600"
                 filter="url(#radar-glow)"
                 style={{
@@ -173,14 +225,23 @@ export function RadarChart({ competitors }: { competitors: Competitor[] }) {
         </svg>
       </div>
 
-      {/* Legend */}
       <div className="flex flex-wrap gap-x-4 gap-y-2 justify-center mt-3">
         {competitors.map((c, i) => (
           <div key={c.name} className="flex items-center gap-1.5 text-xs text-[var(--muted-foreground)]">
-            <span className="w-2 h-2 rounded-full shrink-0" style={{ background: COLORS[i % COLORS.length] }} />
+            <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: COLORS[i % COLORS.length] }} />
             {c.name}
           </div>
         ))}
+        {userBrand && (
+          <div className="flex items-center gap-1.5 text-xs text-[var(--muted-foreground)]">
+            <span
+              className="w-2.5 h-2.5 rounded-full shrink-0 border border-dashed"
+              style={{ borderColor: USER_COLOR, background: "transparent" }}
+            />
+            {userBrand.name}
+            <span className="opacity-60">(You)</span>
+          </div>
+        )}
       </div>
     </div>
   );

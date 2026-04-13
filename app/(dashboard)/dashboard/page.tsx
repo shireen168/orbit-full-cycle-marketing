@@ -96,7 +96,14 @@ export default function DashboardPage() {
         </motion.div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {projects.map((project, i) => <ProjectCard key={project.id} project={project} index={i} />)}
+          {projects.map((project, i) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              index={i}
+              onDelete={(id) => setProjects((prev) => prev.filter((p) => p.id !== id))}
+            />
+          ))}
         </div>
       )}
     </div>

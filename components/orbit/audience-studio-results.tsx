@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { CheckCircle2, ChevronDown, ChevronUp } from "lucide-react";
+import { ArrowRight, CheckCircle2, ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { AudienceStudio } from "@/types/orbit";
 
@@ -75,10 +75,10 @@ export function AudienceStudioResults({ results, projectId }: { results: Audienc
       <div className="pt-4 border-t border-[var(--border)] flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-4">
         <div className="flex items-center gap-2">
           <CheckCircle2 size={16} className="text-[var(--primary)]" />
-          <p className="text-sm text-[var(--muted-foreground)]">Phase 1 complete. All 3 modules done.</p>
+          <p className="text-sm text-[var(--muted-foreground)]">Audience profiles ready.</p>
         </div>
-        <Link href={`/projects/${projectId}`} className="flex items-center justify-center gap-2 bg-[var(--primary)] text-[var(--primary-foreground)] px-5 py-2.5 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity whitespace-nowrap">
-          View Project Overview
+        <Link href={`/projects/${projectId}/campaign-planner`} className="flex items-center justify-center gap-2 bg-[var(--primary)] text-[var(--primary-foreground)] px-5 py-2.5 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity whitespace-nowrap">
+          Campaign Planner <ArrowRight size={14} />
         </Link>
       </div>
     </motion.div>

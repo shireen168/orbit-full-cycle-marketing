@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BarChart3, Layers, Users } from "lucide-react";
+import { BarChart3, Layers, Users, Target, FileText } from "lucide-react";
 
 export const cardVariant = {
   initial: { opacity: 0, y: 40 },
@@ -32,6 +32,22 @@ export const modules = [
     description:
       "Build three high-fidelity buyer personas grounded in your brand strategy, with pain points, buying triggers, objections, and ad hooks.",
     tags: ["Persona Generation", "Psychographics", "Ad Copy"],
+  },
+  {
+    number: "04",
+    icon: Target,
+    label: "Campaign Planner",
+    description:
+      "Turn research into a campaign ready to run. Get a full campaign brief, message architecture, channel mix, and three distinct campaign concepts.",
+    tags: ["Campaign Brief", "Channel Mix", "Message Architecture"],
+  },
+  {
+    number: "05",
+    icon: FileText,
+    label: "Content Studio",
+    description:
+      "Generate platform-native copy across every channel from your selected campaign concept, plus a full repurposing matrix.",
+    tags: ["Multi-format Copy", "Repurposing", "Brand Voice"],
   },
 ];
 

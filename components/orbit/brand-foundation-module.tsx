@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, RefreshCw } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
 import type { BrandFoundation, MarketIntel } from "@/types/orbit";
 import { BrandFoundationForm } from "./brand-foundation-form";
 import { BrandFoundationResults } from "./brand-foundation-results";
 import { ModuleLoading } from "./module-loading";
+import { RegenConfirm } from "./regen-confirm";
 import { useCredits } from "@/context/credits-context";
 
 const LOADING_STEPS = [
@@ -65,8 +66,18 @@ export function BrandFoundationModule({ projectId, projectName, initialData, mar
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
-      <div className="mb-8">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-10 relative">
+      {/* Ambient decorative orbs */}
+      <div
+        className="absolute -top-4 -right-4 w-80 h-80 rounded-full bg-[var(--primary)]/5 blur-3xl pointer-events-none select-none animate-pulse"
+        style={{ animationDuration: "7s" }}
+      />
+      <div
+        className="absolute top-20 right-24 w-56 h-56 rounded-full bg-violet-500/4 blur-3xl pointer-events-none select-none animate-pulse"
+        style={{ animationDuration: "10s", animationDelay: "2s" }}
+      />
+
+      <div className="mb-8 relative">
         <Link href={`/projects/${projectId}`} className="inline-flex items-center gap-2 text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors mb-5">
           <ArrowLeft size={14} /> {projectName}
         </Link>
@@ -75,11 +86,7 @@ export function BrandFoundationModule({ projectId, projectName, initialData, mar
             <p className="text-xs uppercase tracking-widest text-[var(--muted-foreground)] mb-2 font-heading">Module 2</p>
             <h1 className="text-2xl sm:text-3xl font-heading font-bold text-[var(--foreground)]">Brand Foundation</h1>
           </div>
-          {view === "results" && (
-            <button onClick={() => setView("form")} className="flex items-center gap-1.5 text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors mt-2 shrink-0">
-              <RefreshCw size={13} /> Regenerate
-            </button>
-          )}
+          {view === "results" && <RegenConfirm onConfirm={() => setView("form")} />}
         </div>
       </div>
 

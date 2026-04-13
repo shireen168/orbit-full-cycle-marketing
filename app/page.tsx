@@ -41,10 +41,10 @@ export default function LandingPage() {
       <section ref={modulesRef} className="relative z-10 px-6 md:px-12 lg:px-24 pb-28">
         <div className="max-w-5xl mx-auto flex flex-col gap-12">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={modulesInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, ease: "easeOut" as const }} className="flex flex-col gap-2">
-            <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: "oklch(0.72 0.16 185)" }}>Three phases</span>
+            <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: "oklch(0.72 0.16 185)" }}>Five modules</span>
             <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "var(--font-syne)", color: "oklch(0.93 0.006 260)" }}>The full marketing intelligence stack</h2>
           </motion.div>
-          <motion.div variants={stagger} initial="initial" animate={modulesInView ? "animate" : "initial"} className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <motion.div variants={stagger} initial="initial" animate={modulesInView ? "animate" : "initial"} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {modules.map((mod) => <ModuleCard key={mod.number} mod={mod} />)}
           </motion.div>
         </div>
