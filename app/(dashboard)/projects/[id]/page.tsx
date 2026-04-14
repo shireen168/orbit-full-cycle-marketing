@@ -26,6 +26,8 @@ export default async function ProjectPage({
   const m1 = !!project.market_intel;
   const m2 = !!project.brand_foundation;
   const m3 = !!project.audience_studio;
+  const m4 = !!project.campaign_plan;
+  const m5 = !!project.content_studio;
 
   const modules = [
     {
@@ -55,9 +57,27 @@ export default async function ProjectPage({
       locked: !m2,
       complete: m3,
     },
+    {
+      number: 4,
+      title: "Campaign Planner",
+      description:
+        "Build a campaign brief, message architecture, channel mix, and three distinct campaign concepts.",
+      href: `/projects/${id}/campaign-planner`,
+      locked: !m3,
+      complete: m4,
+    },
+    {
+      number: 5,
+      title: "Content Studio",
+      description:
+        "Generate multi-format copy variants and a full repurposing matrix from your selected campaign concept.",
+      href: `/projects/${id}/content-studio`,
+      locked: !m4,
+      complete: m5,
+    },
   ];
 
-  const completed = [m1, m2, m3].filter(Boolean).length;
+  const completed = [m1, m2, m3, m4, m5].filter(Boolean).length;
 
   return (
     <div className="max-w-3xl mx-auto px-8 py-10">
@@ -72,9 +92,9 @@ export default async function ProjectPage({
         <p className="text-[var(--muted-foreground)] text-sm mt-2">
           {completed === 0
             ? "Start with Module 1 to begin building your marketing strategy."
-            : completed === 3
+            : completed === 5
             ? "All modules complete."
-            : `${completed} of 3 modules complete.`}
+            : `${completed} of 5 modules complete.`}
         </p>
       </div>
 
@@ -85,12 +105,12 @@ export default async function ProjectPage({
         ))}
       </div>
 
-      {/* Export — only when all 3 modules complete */}
-      {completed === 3 && (
+      {/* Export — only when all 5 modules complete */}
+      {m5 && (
         <div className="mt-8 pt-8 border-t border-[var(--border)] flex items-center justify-between gap-4">
           <div>
-            <p className="text-sm font-semibold text-[var(--foreground)]">Strategy report ready</p>
-            <p className="text-xs text-[var(--muted-foreground)] mt-0.5">Download a polished PDF of your full market strategy.</p>
+            <p className="text-sm font-semibold text-[var(--foreground)]">Full strategy report ready</p>
+            <p className="text-xs text-[var(--muted-foreground)] mt-0.5">Download a complete PDF covering research, brand, personas, campaign, and content.</p>
           </div>
           <a
             href={`/api/projects/${id}/export`}

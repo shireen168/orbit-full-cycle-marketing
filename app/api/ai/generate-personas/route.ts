@@ -90,7 +90,8 @@ Rules:
 - painPoints, buyingTriggers, objections must be specific to the target market
 - sampleAdHook must speak directly to that persona's pain point and desires
 ${brandContext ? "- Align each persona's triggers and hooks with the brand voice and value proposition" : ""}
-- Make personas diverse in role, seniority, or use case where possible`;
+- Make personas diverse in role, seniority, or use case where possible
+- Never use em-dashes. Use commas, colons, or periods instead.`;
 
   try {
     const message = await anthropic.messages.create({

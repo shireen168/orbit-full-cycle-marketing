@@ -84,7 +84,8 @@ Rules:
 - brandVoice: single adjectives or short phrases (e.g. "Bold but approachable", "Data-driven")
 - taglines: punchy, memorable, under 8 words each
 - All output must be specific to ${cleanName}, not generic
-${m1Context ? "- Reference the market gaps and whitespace opportunities in your positioning" : ""}`;
+${m1Context ? "- Reference the market gaps and whitespace opportunities in your positioning" : ""}
+- Never use em-dashes. Use commas, colons, or periods instead.`;
 
   try {
     const message = await anthropic.messages.create({
