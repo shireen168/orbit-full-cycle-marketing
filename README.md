@@ -77,7 +77,7 @@ Every Claude prompt in M2 and M3 is injected with the structured output of the p
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/shireen-mvps/orbit-full-cycle-marketing.git
+git clone https://github.com/shireen168/orbit.git
 cd orbit-full-cycle-marketing
 ```
 
@@ -208,4 +208,4 @@ orbit/
 
 ---
 
-Built by [Shireen](https://github.com/shireen-mvps) · Powered by Claude Code · View full AI marketing portfolio at [aiwithshireen.com](https://aiwithshireen.com)
+Built by [Shireen](https://github.com/shireen168) · Powered by Claude Code · View full AI marketing portfolio at [aiwithshireen.com](https://aiwithshireen.com)
