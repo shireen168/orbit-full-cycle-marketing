@@ -6,7 +6,7 @@
 
 Built with **Next.js 16**, **Clerk authentication**, **Supabase**, and **Claude Sonnet 4.6**.
 
-**Live demo:** [orbit-mkt.vercel.app](https://orbit-mkt.vercel.app)
+**Live demo:** [orbit-full-cycle-marketing.vercel.app](https://orbit-full-cycle-marketing.vercel.app)
 
 ---
 
